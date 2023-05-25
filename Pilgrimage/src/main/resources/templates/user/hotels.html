@@ -1,0 +1,379 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="user/base::Layout(~{::section})">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<title>Document</title>
+
+</head>
+
+<body>
+
+
+
+	<section style="padding-top: 8%;">
+
+
+		<!-- Swiper Carousal-->
+
+		<div class=" rounded-circle">
+
+			<div class="Hotel1" style="height: 400px;">
+
+				<h1 class="text-white fw-bold"
+					style="font-size: 55px; padding: 7% 0 2% 16%;">Find The Right
+					Hotel Today</h1>
+
+			</div>
+
+		</div>
+
+		<!-- check avilability form-->
+
+		<div class="container availability-form">
+
+			<div class="row">
+
+				<div class="col-lg-12 bg-dark text-primary shadow p-4 rounded">
+
+					<h5 class="col-lg-3">Check Hotel Availability</h5>
+
+					<form>
+
+						<div class="row align-items-end">
+
+							<div class="col-lg-3 mb-3">
+
+								<label class="form-label" style="font-weight: 500;">From</label>
+
+								<input type="text" class="form-control shadow-none"
+									placeholder="Departure city">
+
+							</div>
+
+							<div class="col-lg-3 mb-3">
+
+								<label class="form-label" style="font-weight: 500;">To</label> <input
+									type="text" class="form-control shadow-none"
+									placeholder="Destination city">
+
+							</div>
+
+							<div class="col-lg-3 mb-3">
+
+								<label class="form-label" style="font-weight: 500;">Depart</label>
+
+								<input type="date" class="form-control shadow-none">
+
+							</div>
+
+							<div class="col-lg-2 mb-3">
+
+								<label class="form-label" style="font-weight: 500;">Children</label>
+
+								<select class="form-select shadow-none">
+
+									<option value="1">One</option>
+
+									<option value="2">Two</option>
+
+									<option value="3">Three</option>
+
+								</select>
+
+							</div>
+
+							<div class="col-lg-1 mb-lg-3 mt-2">
+
+								<button type="submit"
+									class="btn btn-primary shadow-none custom-bg">Search</button>
+
+							</div>
+
+						</div>
+
+					</form>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="container">
+
+			<div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+
+				<h6
+					class="section-title bg-white text-center text-primary px-3 mt-5">Hotel</h6>
+
+				<h1 class="mb-5">Awesome Hotels</h1>
+
+			</div>
+
+			<div class="row" th:each="h : ${hotel}">
+			
+			
+
+				<div class="hotels ">
+
+					<div class="col-lg-10 offset-md-1 ">
+
+						<div class="card mb-4 border-1  shadow">
+
+							<div class="row g-0 align-items-center">
+
+								<div class="col-md-5 col-ld-9 hot">
+
+									<img  th:src="@{'/image/'+${h.hotelImgUrl}}" class="img-fluid ">
+
+									<div class="d-flex border-bottom">
+
+										<small class="flex-fill text-center border-end py-2" ><i
+											class="fa fa-map-marker-alt text-primary me-2"></i> <small th:text="${h.location}"></small>   </small> <small
+											class="flex-fill text-center border-end py-2"><i
+											class=" fa fa-tachograph-digital text-primary me-2"></i><small th:text="${h.type}"></small></small> <small
+											class="flex-fill text-center py-2"><i
+											class="fa fa-user text-primary me-2"></i><small  th:text="${h.noofPerson + ' Person'}"></small></small>
+
+									</div>
+
+								</div>
+
+								<div class="col-md-5 px-lg-4 px-md-3 px-0">
+
+									<h5 class="mb-3 fs-2 text-danger " th:text="${h.hotelName}">Hotel Name</h5>
+
+									<div class="features mb-4">
+
+										<h6 class="mb-1">Features</h6>
+
+										<span class="badge rounded-pill bg-light text-dark text-wrap" th:text="${h.noofRooms+ ' Room'}">
+
+											 </span> <span
+											class="badge rounded-pill bg-light text-dark text-wrap">
+
+											1 Bathroom </span> <span
+											class="badge rounded-pill bg-light text-dark text-wrap">
+
+											1 Balcony </span>
+
+									</div>
+
+									<div class="Facilities mb-3">
+
+										<h6 class="mb-1">Facilities</h6>
+
+										<span class="badge rounded-pill bg-light text-dark text-wrap">
+
+											Wifi </span> <span
+											class="badge rounded-pill bg-light text-dark text-wrap">
+
+											Television </span> <span
+											class="badge rounded-pill bg-light text-dark text-wrap">
+
+											Room Heater </span>
+
+									</div>
+
+									<div class="guests">
+										<div class="mt-2">
+
+											<small class="fa fa-star text-primary"></small> <small
+												class="fa fa-star text-primary"></small> <small
+												class="fa fa-star text-primary"></small> <small
+												class="fa fa-star text-primary"></small> <small
+												class="fa fa-star text-primary"></small>
+
+										</div>
+
+
+									</div>
+
+								</div>
+
+								<div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">
+
+									<h4 class="mb-4 " th:text="${'$ ' +h.price}">$2000 per night</h4>
+
+									<button  class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#hotelreadModal" th:attr="data-bs-target='#hotelreadModal'+${h.hId}" >Read More</button> <br>
+
+								<button class="btn btn-outline-success  mt-2"
+									type="button" data-bs-toggle="offcanvas"
+									data-bs-target="#offcanvasRight"
+									th:attr="data-bs-target='#offcanvasRight'+${h.hId}"
+									aria-controls="offcanvasRight">Book Now</button>
+
+
+								<div class="offcanvas offcanvas-end" tabindex="-1"
+									th:id="offcanvasRight+${h.hId}"
+									aria-labelledby="offcanvasRightLabel">
+									<div class="offcanvas-header text-center">
+										<h5 class="text-primary  fs-2 text-center"
+											id="offcanvasRightLabel">Book Hotel</h5>
+										<button type="button" class="btn-close text-reset"
+											data-bs-dismiss="offcanvas" aria-label="Close"></button>
+									</div>
+									<div class="offcanvas-body">
+
+										<div class="card shadow">
+											<div class="card-body">
+
+												<div>
+
+													<input type="hidden" name="hoteltId" id="hotelId"
+														th:value="${h.hId}">
+
+
+
+
+
+													<div class="mb-3">
+														<label for="nu" class="form-label">Name</label> <input
+															th:value="${user.name}" type="text" class="form-control"
+															id="nu" name="name" readonly>
+													</div>
+
+													<div class="mb-3">
+														<label for="locaton" class="form-label">Phone No</label> <input
+															type="number" th:value="${user.mobileno}"
+															class="form-control" id="locaton" name="phoneno" readonly>
+													</div>
+
+													<div class="mb-3">
+														<label for="pp" class="form-label"> Email </label> <input
+															type="email" class="form-control"
+															th:value="${user.email}" id="pp" name="email" readonly>
+													</div>
+
+                                                       <div class="mb-3">
+														<label for="num-two" class="form-label"> Price Per Room :
+															 </label> 
+															<input id="num-two" class="form-control"   th:value="${h.price}" type="number" readonly>
+													</div>
+
+
+													<div class="mb-3">
+														<label for="num-one" class="form-label"> How Many
+															Room You Want To Book ? </label> <input type="number"
+															class="form-control" id="num-one" step="0.00000001"
+															min="0.00000001" name="noOfSeats" required>
+													</div>
+													
+
+
+
+													<div class="mb-3">
+														<label for="nus" class="form-label">Booking Date</label> <input
+															type="date" class="form-control" id="nus" name="date"
+															required>
+													</div>
+
+													<div>
+														<p id="add-sum"
+															class=" btn btn-outline-light text-primary fs-4"></p>
+													</div>
+
+													<div class="text-center">
+
+														<button type="submit" onclick="hotelpaymentStart()"
+															class="btn btn-success ">BOOK NOW</button>
+													</div>
+
+												</div>
+
+											</div>
+										</div>
+
+
+
+
+
+									</div>
+								</div>
+
+
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+				
+				
+				
+					<!-- Modal -->
+		<div class="modal fade" th:id="hotelreadModal+${h.hId}" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title text-primary" id="exampleModalLabel" th:text="${'About '+h.hotelName}">About Hotel</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body text-center"  >
+					
+					  	<h6 th:text="${h.description}"></h6>
+					
+					</div>
+					
+				</div>
+			</div>
+		</div>
+				
+	<!-- --------------------------------------------modal end--------------------------------- -->			
+
+			</div>
+
+		</div>
+
+
+
+		<script type="text/javascript">
+		
+			   $(document).ready(() => {
+				   $(".item").removeClass("active");
+				   $("#hotel").addClass("active");
+			   });
+			   
+		
+			</script>
+			
+			<script type="text/javascript">
+			
+			var numOne = document.getElementById("num-one");
+			var numTwo = document.getElementById("num-two");
+			var addSum = document. getElementById("add-sum");
+
+			numOne.addEventListener("input", add);
+			numTwo.addEventListener("input", add);
+
+			function add(){
+			  var one = Number(numOne.value) || 0;
+			  var two = Number(numTwo.value) || 0;
+			  var sum = Number(one*two);
+			  addSum.innerHTML =  sum;
+			}
+			</script>
+			
+		
+
+	</section>
+
+
+
+	
+
+
+
+</body>
+
+</html>

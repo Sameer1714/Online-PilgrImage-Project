@@ -1,0 +1,330 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="user/base::Layout(~{::section})">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<title>Document</title>
+
+</head>
+
+<body>
+
+
+
+	<section style="padding-top: 8%;">
+
+		<div class=" rounded-circle">
+
+			<div class="search1" style="height: 400px;">
+
+				<h1 class="text-white fw-bold"
+					style="font-size: 55px; padding: 7% 0 2% 16%;">The best flight
+					deals to everywhere, from anywhere</h1>
+
+			</div>
+
+		</div>
+
+		<!-- check avilability form-->
+
+		<div class="container availability-form">
+
+			<div class="row">
+
+				<div class="col-lg-12 bg-dark text-primary shadow p-4 rounded">
+
+					<h5 class="col-lg-3">Check Flight Availability</h5>
+
+					<form>
+
+						<div class="row align-items-end">
+
+							<div class="col-lg-3 mb-3">
+
+								<label class="form-label" style="font-weight: 500;">From</label>
+
+								<input type="text" class="form-control shadow-none"
+									placeholder="Departure city">
+
+							</div>
+
+							<div class="col-lg-3 mb-3">
+
+								<label class="form-label" style="font-weight: 500;">To</label> <input
+									type="text" class="form-control shadow-none"
+									placeholder="Destination city">
+
+							</div>
+
+							<div class="col-lg-3 mb-3">
+
+								<label class="form-label" style="font-weight: 500;">Depart</label>
+
+								<input type="date" class="form-control shadow-none">
+
+							</div>
+
+							<div class="col-lg-2 mb-3">
+
+								<label class="form-label" style="font-weight: 500;">Children</label>
+
+								<select class="form-select shadow-none">
+
+									<option value="1">One</option>
+
+									<option value="2">Two</option>
+
+									<option value="3">Three</option>
+
+								</select>
+
+							</div>
+
+							<div class="col-lg-1 mb-lg-3 mt-2">
+
+								<button type="submit"
+									class="btn btn-primary shadow-none custom-bg">Search</button>
+
+							</div>
+
+						</div>
+
+					</form>
+
+				</div>
+
+			</div>
+
+		</div>
+
+
+
+		<div class="container mt-5 mb-5" th:each="f : ${flight}">
+
+			<div class="d-flex justify-content-center row ">
+
+				<div class="col-md-12 shadow border">
+
+					<div class="row bg-white border rounded">
+
+						<div class="col-md-2 mt-4 text-center">
+
+							<h4 th:text="${f.company}">Air India</h4>
+							<p class="fs-6" th:text="${f.flightNo}">#abs456</p>
+
+						</div>
+
+						<div class="col-md-2 mt-4 text-center">
+
+							<h4 th:text="${f.departureTime}">08:10</h4>
+
+							<p class="text-primary" th:text="${f.departureCity}">New
+								Delhi</p>
+
+						</div>
+
+						<div class="col-md-2 mt-4 text-center">
+
+							<h5 th:text="${f.totalTime}">02h:55m</h5>
+
+							<p>non-stop</p>
+
+						</div>
+
+						<div class="col-md-2 mt-4 text-center">
+
+							<h4 th:text="${f.destinationTime}">10:45</h4>
+
+							<p class="text-primary" th:text="${f.destinationCity}">Mumbai</p>
+
+						</div>
+
+						<div
+							class="align-items-center align-content-center col-md-2  mt-4 text-center">
+
+							<div class="  align-items-center text-center">
+
+								<h4 class=" text-center" th:text="${'$ '+f.price}">$7,183</h4>
+
+
+
+							</div>
+
+						</div>
+
+						<div class="col-md-2 text-center">
+
+							<div class="d-flex flex-column mt-3">
+
+								<button class="btn btn-primary btn-sm" type="button"
+									data-bs-toggle="modal" data-bs-target="#flightreadModal"
+									th:attr="data-bs-target='#hotelreadModal'+${f.fId}">Details</button>
+
+								<button class="btn btn-outline-success btn-sm mt-2"
+									type="button" data-bs-toggle="offcanvas"
+									data-bs-target="#offcanvasRight"
+									th:attr="data-bs-target='#offcanvasRight'+${f.fId}"
+									aria-controls="offcanvasRight">Book Now</button>
+
+
+								<div class="offcanvas offcanvas-end" tabindex="-1"
+									th:id="offcanvasRight+${f.fId}"
+									aria-labelledby="offcanvasRightLabel">
+									<div class="offcanvas-header text-center">
+										<h5 class="text-primary  fs-2 text-center"
+											id="offcanvasRightLabel">Book Bus</h5>
+										<button type="button" class="btn-close text-reset"
+											data-bs-dismiss="offcanvas" aria-label="Close"></button>
+									</div>
+									<div class="offcanvas-body">
+
+										<div class="card shadow">
+											<div class="card-body">
+
+												<div>
+
+													<input type="hidden" name="flightId" id="flightId"
+														th:value="${f.fId}">
+
+
+
+
+
+													<div class="mb-3">
+														<label for="nu" class="form-label">Name</label> <input
+															th:value="${user.name}" type="text" class="form-control"
+															id="nu" name="name" readonly>
+													</div>
+
+													<div class="mb-3">
+														<label for="locaton" class="form-label">Phone No</label> <input
+															type="number" th:value="${user.mobileno}"
+															class="form-control" id="locaton" name="phoneno" readonly>
+													</div>
+
+													<div class="mb-3">
+														<label for="pp" class="form-label"> Email </label> <input
+															type="email" class="form-control"
+															th:value="${user.email}" id="pp" name="email" readonly>
+													</div>
+
+													<div class="mb-3">
+														<label for="num-two" class="form-label"> Price Per Seat :
+															 </label> <input id="num-two" th:value="${f.price}" type="number"
+															class="form-control" 
+															readonly>
+													</div>
+
+
+													<div class="mb-3">
+														<label for="num-one" class="form-label"> How Many
+															Seat You Want To Book ? </label> <input type="number"
+															class="form-control" id="num-one" step="0.00000001"
+															min="0.00000001" name="noOfSeats" required>
+													</div>
+													
+
+
+													<div class="mb-3">
+														<label for="nus" class="form-label">Booking Date</label> <input
+															type="date" class="form-control" id="nus" name="date"
+															required>
+													</div>
+
+													<div>
+														<p id="add-sum"
+															class=" btn btn-outline-light text-primary fs-4"></p>
+													</div>
+
+													<div class="text-center">
+
+														<button type="submit" onclick="flightpaymentStart()"
+															class="btn btn-success ">BOOK NOW</button>
+													</div>
+
+												</div>
+
+											</div>
+										</div>
+
+
+
+
+
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+			<!-- Modal -->
+			<div class="modal fade" th:id="hotelreadModal+${f.fId}" tabindex="-1"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div
+					class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title text-primary" id="exampleModalLabel">Details</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div class="modal-body text-center">
+
+							<h6 th:text="${f.details}"></h6>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+
+		<script type="text/javascript">
+		
+			   $(document).ready(() => {
+				   $(".items").removeClass("active");
+				   $("#flight").addClass("active");
+			   });
+			   
+		
+			</script>
+			
+			<script type="text/javascript">
+			
+			var numOne = document.getElementById("num-one");
+			var numTwo = document.getElementById("num-two");
+			var addSum = document. getElementById("add-sum");
+
+			numOne.addEventListener("input", add);
+			numTwo.addEventListener("input", add);
+
+			function add(){
+			  var one = Number(numOne.value) || 0;
+			  var two = Number(numTwo.value) || 0;
+			  var sum = Number(one*two);
+			  addSum.innerHTML =  sum;
+			}
+			</script>
+
+
+	</section>
+
+
+
+
+
+
+
+</body>
+
+</html>

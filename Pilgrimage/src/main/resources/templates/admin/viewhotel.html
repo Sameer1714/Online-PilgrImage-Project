@@ -1,0 +1,177 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="admin/base::Layout(~{::section})">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<title>Document</title>
+
+</head>
+
+<body>
+
+
+
+	<section>
+
+		<div th:if="${session.message}"
+			th:classappend="${session.message.type}"
+			class="alert alert-primary text-center mt-5" role="alert">
+			<p th:text="${session.message.content}"></p>
+
+			<th:block th:text="${#session.removeAttribute('message')}">
+			</th:block>
+		</div>
+
+		<div class="card mt-3">
+			<div class="card-body">
+				<h1 class="text-center text-primary">Hotel Details</h1>
+
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">Hotel Name</th>
+								<th scope="col">Location</th>
+								<th scope="col">Type</th>
+								<th scope="col">No Of Rooms</th>
+								<th scope="col">No of Person</th>
+
+								<th scope="col">Price</th>
+								<th scope="col">Details</th>
+								<th scope="col">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="h : ${listofhotel}">
+
+								<!-- <th scope="row">1</th> -->
+								<td th:text="${h.hotelName}"></td>
+
+
+								<td th:text="${h.location}">Mark</td>
+
+								<td th:text="${h.type}"></td>
+								<td th:text="${h.noofRooms}"></td>
+								<td th:text="${h.noofPerson}"></td>
+
+
+								<td th:text="${h.price}">@mdo</td>
+								<td th:text="${h.description}">@mdo</td>
+								<td>
+
+
+									<button class="btn btn-primary" type="button"
+										data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+										th:attr="data-bs-target='#offcanvasRight'+${h.hId}"
+										aria-controls="offcanvasRight">
+										<i class="fa-solid fa-pen-to-square"></i>
+									</button> <br> <a href="#" th:onclick="|deleteHotel(${h.hId})|"
+									class=" btn btn-danger mt-2  text-center"><i
+										class="fa-solid fa-trash-can"></i></a>
+
+
+									<div class="offcanvas offcanvas-end" tabindex="-1"
+										th:id="offcanvasRight+${h.hId}"
+										aria-labelledby="offcanvasRightLabel">
+										<div class="offcanvas-header text-center">
+											<h5 class="text-primary  fs-3 text-center"
+												id="offcanvasRightLabel">Edit Hotel Details</h5>
+											<button type="button" class="btn-close text-reset"
+												data-bs-dismiss="offcanvas" aria-label="Close"></button>
+										</div>
+										<div class="offcanvas-body">
+
+											<form th:action="@{/admin/edithotel}" method="post"
+												enctype="multipart/form-data">
+
+												<input type="hidden" name="hId" th:value="${h.hId}" />
+
+												<div class="mb-3">
+													<label for="hotelname" class="form-label"> Hotel
+														Name</label> <input type="text" class="form-control"
+														id="hotelname" th:value="${h.hotelName}" name="hotelName"
+														required>
+												</div>
+
+												<div class="mb-3">
+													<label for="locaton" class="form-label">Location</label> <input
+														type="text" class="form-control" id="locaton"
+														th:value="${h.location}" name="location" required>
+												</div>
+
+												<div class="mb-3">
+													<label for="nu" class="form-label">No Of Person</label> <input
+														type="number" class="form-control"
+														th:value="${h.noofPerson}" id="nu" name="noofPerson"
+														required>
+												</div>
+
+												<div class="mb-3">
+													<label for="pp" class="form-label">Price Per Person</label>
+													<input type="number" class="form-control" id="pp"
+														th:value="${h.price}" name="price" required>
+												</div>
+
+												<div class="mb-3">
+													<label for="se" class="form-label"> Choose Type</label> <select
+														name="type" id="se" class="form-control" required>
+
+														<option value="AC">AC</option>
+														<option value="Non AC">Non AC</option>
+													</select>
+												</div>
+
+												<div class="mb-3">
+													<label for="noofroom" class="form-label">No of
+														Rooms</label> <input type="number" th:value="${h.noofRooms}"
+														class="form-control" id="noofroom" name="noofRooms"
+														required>
+												</div>
+
+												<div class="mb-3">
+													<label for="descr" class="form-label">Description</label>
+													<textarea rows="5" th:text="${h.description}"
+														class="form-control" id="descr" name="description"
+														required></textarea>
+												</div>
+
+												<div class="mb-3">
+													<label for="img" class="form-label">Add Photo</label> <input
+														type="file" class="form-control" id="img" name="photo"
+														required>
+												</div>
+
+												<div class="text-center">
+
+													<button type="submit" class="btn btn-primary">Submit</button>
+												</div>
+											</form>
+
+
+
+										</div>
+									</div>
+
+
+
+
+
+								</td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			   $(document).ready(() => {
+				   $(".item").removeClass("active");
+				   $("#Hotel-link").addClass("actives");
+			   });
+			</script>
+	</section>
+</body>
+</html>

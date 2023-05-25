@@ -1,0 +1,28 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="admin/base::Layout(~{::section})">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<title>Document</title>
+
+</head>
+
+<body>
+
+
+
+	<section>
+
+		<h1>View Enquires</h1>
+		
+		<script type="text/javascript">
+			   $(document).ready(() => {
+				   $(".item").removeClass("active");
+				   $("#enquires-link").addClass("actives");
+			   });
+			</script>
+	</section>
+</body>
+</html>

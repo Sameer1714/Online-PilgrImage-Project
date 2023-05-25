@@ -1,0 +1,81 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="admin/base::Layout(~{::section})">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<title>Document</title>
+
+</head>
+
+<body>
+
+
+
+	<section>
+
+		<div class="card mt-3">
+			<div class="card-body">
+				<h1 class="text-center text-primary">Holiday-Package Booking Details</h1>
+
+
+
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">Order_ID</th>
+								<th scope="col">Booking Date</th>
+								<th scope="col">Customer Name</th>
+								<th scope="col">Customer Phone No</th>
+								<th scope="col">Customer Email</th>
+
+								<th scope="col">Holiday-Package Name</th>
+								<th scope="col">No.of Days</th>
+								<th scope="col">No.of Activities</th>
+								<th scope="col">No.Of Family Person </th>
+								<th scope="col">Booking Price</th>
+								<th scope="col">Payment Status</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="f : ${getBookingHoliday}">
+
+								<!-- <th scope="row">1</th> -->
+								<td th:text="${f.orderId}"></td>
+
+
+								<td th:text="${f.date}">Mark</td>
+
+								<td th:text="${f.user.name}"></td>
+								<td th:text="${f.user.mobileno}"></td>
+								<td th:text="${f.user.email}"></td>
+								<td th:text="${f.package1.packageName}"></td>
+
+
+
+								<td th:text="${f.package1.days}">@mdo</td>
+								<td th:text="${f.package1.noofActivities}">@mdo</td>
+								<td th:text="${f.noOfPerson}">@mdo</td>
+								<td th:text="${f.bookingPrice}">@mdo</td>
+								<td class="  text-primary fs-5 fw-bold" th:text="${f.status}">@mdo</td>
+								
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			   $(document).ready(() => {
+				   $(".item").removeClass("active");
+				   $("#bookpakage-link").addClass("actives");
+			   });
+			</script>
+	</section>
+</body>
+</html>

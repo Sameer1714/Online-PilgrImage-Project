@@ -1,0 +1,204 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="admin/base::Layout(~{::section})">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<title>Document</title>
+
+</head>
+
+<body>
+
+
+
+	<section>
+	
+	<div th:if="${session.message}"
+						th:classappend="${session.message.type}"
+						class="alert alert-primary text-center mt-5" role="alert">
+						<p th:text="${session.message.content}"></p>
+
+						<th:block th:text="${#session.removeAttribute('message')}">
+						</th:block>
+					</div>
+
+		<div class="card mt-3">
+			<div class="card-body">
+				<h1 class="text-center text-primary">Bus Details</h1>
+				
+				
+
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">Company Name</th>
+								<th scope="col">Bus No</th>
+								<th scope="col">Departure City</th>
+								<th scope="col">Departure Time</th>
+								<th scope="col">Destination City</th>
+
+								<th scope="col">Destination Time</th>
+								<th scope="col">Total Time</th>
+								<th scope="col">price</th>
+								<th scope="col">details</th>
+								<th scope="col">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="f : ${listofbus}">
+
+								<!-- <th scope="row">1</th> -->
+								<td th:text="${f.company}"></td>
+
+
+								<td th:text="${f.busNo}">Mark</td>
+
+								<td th:text="${f.departureCity}"></td>
+								<td th:text="${f.departureTime}"></td>
+								<td th:text="${f.destinationCity}"></td>
+								<td th:text="${f.destinationTime}"></td>
+
+
+
+								<td th:text="${f.totalTime}">@mdo</td>
+								<td th:text="${f.price}">@mdo</td>
+								<td th:text="${f.details}">@mdo</td>
+								<td>
+									
+									<button class="btn btn-primary" type="button"
+										data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+										th:attr="data-bs-target='#offcanvasRight'+${f.bId}"
+										aria-controls="offcanvasRight">
+										<i class="fa-solid fa-pen-to-square"></i>
+									</button> &nbsp; <a href="#" th:onclick="|deletebus(${f.bId})|"
+									class=" btn btn-danger   text-center mt-2"><i
+										class="fa-solid fa-trash-can"></i></a>
+
+
+
+
+
+
+									<div class="offcanvas offcanvas-end" tabindex="-1"
+										th:id="offcanvasRight+${f.bId}"
+										aria-labelledby="offcanvasRightLabel">
+										<div class="offcanvas-header text-center">
+											<h5 class="text-primary  fs-3 text-center"
+												id="offcanvasRightLabel">Edit Bus Details</h5>
+											<button type="button" class="btn-close text-reset"
+												data-bs-dismiss="offcanvas" aria-label="Close"></button>
+										</div>
+										<div class="offcanvas-body">
+
+											<form th:action="@{/admin/editbus}" method="post">
+
+												<input type="hidden" name="bId" th:value="${f.bId}" />
+
+												<div class="mb-3">
+													<label for="hotelname" class="form-label"> Bus
+														Company Name</label> <input type="text" th:value="${f.company}"
+														class="form-control" id="hotelname" name="company"
+														required>
+												</div>
+
+												<div class="mb-3">
+													<label for="locaton" class="form-label">Bus No</label> <input
+														type="text" th:value="${f.busNo}" class="form-control"
+														id="locaton" name="busNo" required>
+												</div>
+
+												<div class="mb-3">
+													<label for="nu" class="form-label">Departure City</label> <input
+														type="text" th:value="${f.departureCity}"
+														class="form-control" id="nu" name="departureCity" required>
+												</div>
+
+												<div class="mb-3">
+													<label for="pp" class="form-label">Destination City</label>
+													<input type="text" th:value="${f.departureCity}"
+														class="form-control" id="pp" name="destinationCity"
+														required>
+												</div>
+
+												<div class="mb-3">
+													<label for="pp" class="form-label">Departure Time</label> <input
+														type="time" th:value="${f.departureTime}"
+														class="form-control" id="pp" name="departureTime" required>
+												</div>
+
+												<div class="mb-3">
+													<label for="ppd" class="form-label">Destination
+														Time</label> <input type="time" th:value="${f.destinationTime}"
+														class="form-control" id="ppd" name="destinationTime"
+														required>
+												</div>
+
+												<div class="mb-3">
+													<label for="noofroom" class="form-label">Ticket
+														Price</label> <input type="number" th:value="${f.price}"
+														class="form-control" id="noofroom" name="price" required>
+												</div>
+
+												<div class="mb-3">
+													<label for="descr" class="form-label">Details</label>
+													<textarea rows="5" th:text="${f.details}"
+														class="form-control" id="descr" name="details" required></textarea>
+												</div>
+
+
+
+												<div class="text-center">
+
+													<button type="submit" class="btn btn-primary">Submit</button>
+												</div>
+											</form>
+
+
+										</div>
+									</div>
+
+
+
+
+
+
+
+
+
+
+
+
+								</td>
+
+
+
+
+
+
+
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+		<script type="text/javascript">
+			   $(document).ready(() => {
+				   $(".item").removeClass("active");
+				   $("#bus-link").addClass("actives");
+			   });
+			</script>
+	</section>
+</body>
+</html>

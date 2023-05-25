@@ -1,0 +1,289 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="user/base::Layout(~{::section})">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<title>Document</title>
+
+</head>
+
+<body>
+
+
+
+	<section style="padding-top: 8%;">
+
+		<!-- Swiper Carousal-->
+
+		<div class=" rounded-circle">
+
+			<div class="bus" style="height: 400px;">
+
+				<h1 class=" fw-bold text-white"
+					style="font-size: 55px; padding: 7% 0 2% 16%;">Find The Right
+					Bus Today</h1>
+
+			</div>
+
+		</div>
+
+		<!-- check avilability form-->
+
+		<div class="container availability-form">
+
+			<div class="search-container my-3">
+					<input onkeyup="bussearch()" type="text" name="" id="search-input"
+						class="form-control" placeholder="Search your contact" />
+
+					<div class="search-result"></div>
+
+				</div>
+
+		</div>
+
+
+		<div class="container mt-5 mb-5" th:each="b : ${bus}">
+
+			<div class="d-flex justify-content-center row">
+
+				<div class="col-md-12 shadow border">
+
+					<div class="row bg-white border rounded">
+
+						<div class="col-md-2 mt-4 text-center">
+
+							<h4 th:text="${b.company}">Air India</h4>
+							<p class="fs-6" th:text="${b.busNo}">#abs456</p>
+
+						</div>
+
+						<div class="col-md-2 mt-4 text-center">
+
+							<h4 th:text="${b.departureTime}">08:10</h4>
+
+							<p class="text-primary" th:text="${b.departureCity}">New
+								Delhi</p>
+
+						</div>
+
+						<div class="col-md-2 mt-4 text-center">
+
+							<h5 th:text="${b.totalTime}">02h:55m</h5>
+
+							<p>non-stop</p>
+
+						</div>
+
+						<div class="col-md-2 mt-4 text-center">
+
+							<h4 th:text="${b.destinationTime}">10:45</h4>
+
+							<p class="text-primary" th:text="${b.destinationCity}">Mumbai</p>
+
+						</div>
+
+						<div
+							class="align-items-center align-content-center col-md-2  mt-4 text-center">
+
+							<div class="  align-items-center text-center">
+
+								<h4 class=" text-center" th:text="${'$ '+b.price}">$7,183</h4>
+
+
+
+							</div>
+
+						</div>
+
+						<div class="col-md-2 text-center">
+
+							<div class="d-flex flex-column mt-3">
+
+								<button class="btn btn-primary btn-sm" type="button"
+									data-bs-toggle="modal" data-bs-target="#busreadModal"
+									th:attr="data-bs-target='#busreadModal'+${b.bId}">Details</button>
+
+								<!-- <button class="btn btn-outline-success btn-sm mt-2"
+									type="button">Book Now</button> -->
+
+								<button class="btn btn-outline-success btn-sm mt-2"
+									type="button" data-bs-toggle="offcanvas"
+									data-bs-target="#offcanvasRight"
+									th:attr="data-bs-target='#offcanvasRight'+${b.bId}"
+									aria-controls="offcanvasRight">Book Now</button>
+
+
+								<div class="offcanvas offcanvas-end" tabindex="-1"
+									th:id="offcanvasRight+${b.bId}"
+									aria-labelledby="offcanvasRightLabel">
+									<div class="offcanvas-header text-center">
+										<h5 class="text-primary  fs-2 text-center"
+											id="offcanvasRightLabel">Book Bus</h5>
+										<button type="button" class="btn-close text-reset"
+											data-bs-dismiss="offcanvas" aria-label="Close"></button>
+									</div>
+									<div class="offcanvas-body">
+
+										<div class="card shadow">
+											<div class="card-body">
+
+												<div>
+
+													<input type="hidden" name="busId" id="busId"
+														th:value="${b.bId}">
+
+
+
+
+
+													<div class="mb-3">
+														<label for="nu" class="form-label">Name</label> <input
+															th:value="${user.name}" type="text" class="form-control"
+															id="nu" name="name" readonly>
+													</div>
+
+													<div class="mb-3">
+														<label for="locaton" class="form-label">Phone No</label> <input
+															type="number" th:value="${user.mobileno}"
+															class="form-control" id="locaton" name="phoneno" readonly>
+													</div>
+
+													<div class="mb-3">
+														<label for="pp" class="form-label"> Email </label> <input
+															type="email" class="form-control"
+															th:value="${user.email}" id="pp" name="email" readonly>
+													</div>
+
+													<div class="mb-3">
+														<label for="descr" class="form-label">Address</label>
+														<textarea rows="5" class="form-control" id="descr"
+															name="address" required></textarea>
+													</div>
+
+
+													<div class="mb-3">
+														<label for="num-one" class="form-label"> How Many
+															Seat You Want To Book ? </label> <input type="number"
+															class="form-control" id="num-one" step="0.00000001"
+															min="0.00000001" name="noOfSeats" required>
+													</div>
+													<input id="num-two" th:value="${b.price}" type="hidden">
+
+
+
+													<div class="mb-3">
+														<label for="nus" class="form-label">Booking Date</label> <input
+															type="date" class="form-control" id="nus" name="date"
+															required>
+													</div>
+
+													<div>
+														<p id="add-sum"
+															class=" btn btn-outline-light text-primary fs-4"></p>
+													</div>
+
+													<div class="text-center">
+
+														<button type="submit" onclick="paymentStart()"
+															class="btn btn-success ">BOOK NOW</button>
+													</div>
+
+												</div>
+
+											</div>
+										</div>
+
+
+
+
+
+									</div>
+								</div>
+
+
+
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<!-- Modal -->
+			<div class="modal fade" th:id="busreadModal+${b.bId}" tabindex="-1"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div
+					class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title text-primary" id="exampleModalLabel">Details</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div class="modal-body text-center">
+
+							<h6 th:text="${b.details}"></h6>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+
+
+
+
+
+
+		<script type="text/javascript">
+		
+			   $(document).ready(() => {
+				   $(".items").removeClass("active");
+				   $("#bus").addClass("active");
+			   });
+			   
+			 
+			   
+		
+			</script>
+
+		<script type="text/javascript">
+			
+			var numOne = document.getElementById("num-one");
+			var numTwo = document.getElementById("num-two");
+			var addSum = document. getElementById("add-sum");
+
+			numOne.addEventListener("input", add);
+			numTwo.addEventListener("input", add);
+
+			function add(){
+			  var one = Number(numOne.value) || 0;
+			  var two = Number(numTwo.value) || 0;
+			  var sum = Number(one*two);
+			  addSum.innerHTML =  sum;
+			}
+			</script>
+
+
+
+	</section>
+
+
+
+
+
+
+
+</body>
+
+</html>

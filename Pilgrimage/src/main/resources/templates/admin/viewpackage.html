@@ -1,0 +1,274 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="admin/base::Layout(~{::section})">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<title>Document</title>
+
+</head>
+
+<body>
+
+
+
+	<section>
+
+		<div th:if="${session.message}"
+			th:classappend="${session.message.type}"
+			class="alert alert-primary text-center mt-5" role="alert">
+			<p th:text="${session.message.content}"></p>
+
+			<th:block th:text="${#session.removeAttribute('message')}">
+			</th:block>
+		</div>
+
+
+		<div class=" card mt-3">
+			<div class="card-body">
+				<h1 class="text-center text-primary">Holiday Package Details</h1>
+
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">Package Name</th>
+								<th scope="col">Days</th>
+
+
+								<th scope="col">No Of Activities</th>
+								<th scope="col">Price Per Person</th>
+
+								<th scope="col">Itenery</th>
+
+								<th scope="col">Hotels</th>
+
+								<th scope="col">Flight</th>
+
+								<th scope="col">Trains</th>
+
+								<th scope="col">Bus</th>
+
+								<th scope="col">Action</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="p : ${allPAckage}">
+
+								<!-- <th scope="row">1</th> -->
+								<td class="text-center" th:text="${p.packageName}"></td>
+
+
+								<td class="text-center" th:text="${p.days}"></td>
+
+								<td class="text-center" th:text="${p.noofActivities}"></td>
+								<td class="text-center" th:text="${p.pricePerPerson}"></td>
+								<td class="text-center" th:text="${p.description}"></td>
+
+
+								<td class="text-center" th:if="${p.hotel != null}">
+
+									<div th:each="h :${p.hotel}">
+
+										<h6 th:text="${h.hotelName}"></h6>
+									</div>
+
+								</td>
+
+
+
+
+
+
+								<td class="text-center" th:if="${p.flight}">
+									<div th:each="f :${p.flight}">
+										<h6 th:text="${f.departureCity +' -> '+f.destinationCity}"></h6>
+
+									</div>
+
+								</td>
+
+
+
+
+
+								<td class="text-center" th:if="${p.train}">
+									<div th:each="t :${p.train}">
+										<h6 th:text="${t.departureCity  +' -> '+t.destinationCity}"></h6>
+
+									</div>
+
+								</td>
+
+
+
+								<td class="text-center" th:if="${p.bus}">
+									<div th:each="b :${p.bus}">
+										<h6 th:text="${b.departureCity +' -> '+ b.destinationCity}"></h6>
+
+									</div>
+
+								</td>
+
+
+
+
+								<td>
+
+									<button class="btn btn-primary" type="button"
+										data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+										th:attr="data-bs-target='#offcanvasRight'+${p.pId}"
+										aria-controls="offcanvasRight">
+										<i class="fa-solid fa-pen-to-square"></i>
+									</button> <br> <a href="#" th:onclick="|deletepackage(${p.pId})|"
+									class=" btn btn-danger mt-2  text-center"><i
+										class="fa-solid fa-trash-can"></i></a>
+
+
+
+									<div class="offcanvas offcanvas-end" tabindex="-1"
+										th:id="offcanvasRight+${p.pId}"
+										aria-labelledby="offcanvasRightLabel">
+										<div class="offcanvas-header text-center">
+											<h5 class="text-primary  fs-3 text-center"
+												id="offcanvasRightLabel">Edit Holiday Package Details</h5>
+											<button type="button" class="btn-close text-reset"
+												data-bs-dismiss="offcanvas" aria-label="Close"></button>
+										</div>
+										<div class="offcanvas-body">
+
+											<form th:action="@{/admin/editpackage}" method="post"
+												enctype="multipart/form-data">
+												<input type="hidden" name="pId" th:value="${p.pId}" />
+												<div class="mb-3">
+													<label for="hotelname" class="form-label"> Package
+														Name</label> <input type="text" class="form-control"
+														th:value="${p.packageName}" id="hotelname"
+														name="packageName" required>
+												</div>
+
+
+
+												<div class="mb-3">
+													<label for="nu" class="form-label">No of Days</label> <input
+														type="number" class="form-control" id="nu"
+														th:value="${p.days}" name="days" required>
+												</div>
+
+												<div class="mb-3">
+													<label for="nusd" class="form-label">No of
+														Activities</label> <input type="number"
+														th:value="${p.noofActivities}" class="form-control"
+														id="nusd" name="noofActivities" required>
+												</div>
+
+
+												<div class="mb-3">
+													<label for="pp" class="form-label">Price Per Person</label>
+													<input type="number" th:value="${p.pricePerPerson}"
+														class="form-control" id="pp" name="pricePerPerson"
+														required>
+												</div>
+
+												<div class="mb-3">
+													<label for="sea" class="form-label"> Choose Hotel</label> <select
+														name="hotel" id="sea" class="form-control" multiple>
+
+														<option th:each="h :${listofhotel}" th:value="${h.hId}"
+															th:text="${h.hotelName+'('+h.location+')' }">AC</option>
+
+													</select>
+												</div>
+
+												<div class="mb-3">
+													<label for="sew" class="form-label"> Choose Flight</label>
+													<select name="flight" id="sew" class="form-control"
+														multiple>
+
+														<option th:each="f :${listofflight}" th:value="${f.fId}"
+															th:text="${f.departureCity+' => '+f.destinationCity}">AC</option>
+
+													</select>
+												</div>
+
+												<div class="mb-3">
+													<label for="sed" class="form-label"> Choose Train</label> <select
+														name="train" id="sed" class="form-control" multiple>
+
+
+														<option th:each="t :${listoftrain}" th:value="${t.tId}"
+															th:text="${t.departureCity+' => '+t.destinationCity}">AC</option>
+
+													</select>
+												</div>
+
+												<div class="mb-3">
+													<label for="see" class="form-label"> Choose Bus</label> <select
+														name="bus" id="see" class="form-control" multiple>
+
+														<option th:each="b :${listofbus}" th:value="${b.bId}"
+															th:text="${b.departureCity+' => '+b.destinationCity}">AC</option>
+
+
+													</select>
+												</div>
+
+
+
+												<div class="mb-3">
+													<label for="img" class="form-label">Add Photo</label> <input
+														type="file" class="form-control" id="img"
+														name="packagephoto" required>
+												</div>
+
+
+
+												<div class="mb-3">
+													<label for="imgd" class="form-label">Add ITENERY</label>
+													<textarea rows="10" th:text="${p.description}" required
+														name="description" id="imgd" class="form-control"></textarea>
+												</div>
+
+
+
+
+												<div class="text-center">
+
+													<button type="submit" class="btn btn-primary">Submit</button>
+												</div>
+											</form>
+
+
+
+
+										</div>
+									</div>
+
+
+
+
+
+
+
+								</td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+
+
+		<script type="text/javascript">
+			   $(document).ready(() => {
+				   $(".item").removeClass("active");
+				   $("#pakage-link").addClass("actives");
+			   });
+			</script>
+	</section>
+</body>
+</html>
